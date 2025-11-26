@@ -1,0 +1,20 @@
+# dependencies
+node_modules/
+package-lock.json
+
+# environment variables
+.env
+.env.*
+!.env.example
+
+# build output
+dist/
+build/
+
+# logs
+*.log
+npm-debug.log*
+
+# IDE
+.vscode/
+.idea/

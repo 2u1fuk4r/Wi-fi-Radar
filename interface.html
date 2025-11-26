@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İkili Sayı Sayacı</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .led-display {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .led {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid #f4f1f1;
+            position: relative;
+        }
+
+        .led.red { background-color: #ffdddd; }
+        .led.red.active { background-color: #ff0000; }
+        
+        .led.green { background-color: #ddffdd; }
+        .led.green.active { background-color: #00ff00; }
+
+        .led-label {
+            position: absolute;
+            bottom: -25px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .controls {
+            margin-top: 3rem;
+        }
+
+        .binary-value {
+            font-size: 2rem;
+            margin: 1rem 0;
+            font-family: monospace;
+        }
+
+        button {
+            padding: 0.8rem 2rem;
+            font-size: 1.1rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .decimal-value {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            color: #f7f3f3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>İkili Sayı Sayacı</h1>
+        
+        <div class="led-display">
+            <div class="led green" id="led1">
+                <div class="led-label">LED 1</div>
+            </div>
+            <div class="led red" id="led0">
+                <div class="led-label">LED 0</div>
+            </div>
+        </div>
+
+        <div class="binary-value" id="binaryValue">00</div>
+        <div class="decimal-value">Onluk Sistemde: <span id="decimalValue">0</span></div>
+
+        <div class="controls">
+            <button id="resetBtn">Sıfırla</button>
+        </div>
+    </div>
+
+    <script>
+        let counter = 0;
+        const maxCount = 4;
+        let interval;
+
+        function updateDisplay() {
+            const binaryStr = counter.toString(2).padStart(2, '0');
+            document.getElementById('binaryValue').textContent = binaryStr;
+            document.getElementById('decimalValue').textContent = counter;
+            
+            document.getElementById('led0').classList.toggle('active', binaryStr[1] === '1');
+            document.getElementById('led1').classList.toggle('active', binaryStr[0] === '1');
+        }
+
+        function resetCounter() {
+            counter = 0;
+            updateDisplay();
+        }
+
+        function incrementCounter() {
+            counter = (counter + 1) % maxCount;
+            updateDisplay();
+        }
+
+        // Otomatik sayaç
+        interval = setInterval(incrementCounter, 1000);
+
+        // Reset butonu
+        document.getElementById('resetBtn').addEventListener('click', resetCounter);
+    </script>
+</body>
+</html>
